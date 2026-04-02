@@ -1,0 +1,329 @@
+Importing module 'gym_38' (/tmp/isaacgym/python/isaacgym/_bindings/linux-x86_64/gym_38.so)
+Setting GYM_USD_PLUG_INFO_PATH to /tmp/isaacgym/python/isaacgym/_bindings/linux-x86_64/usd/plugInfo.json
+PyTorch version 2.4.1+cu124
+Device count 1
+/tmp/isaacgym/python/isaacgym/_bindings/src/gymtorch
+/opt/conda/envs/isaacgym/lib/python3.8/site-packages/hydra/_internal/hydra.py:119: UserWarning: Future Hydra versions will no longer change working directory at job runtime by default.
+See https://hydra.cc/docs/1.2/upgrades/1.1_to_1.2/changes_to_job_working_dir/ for more information.
+  ret = run_job(
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Using /root/.cache/torch_extensions/py38_cu124 as PyTorch extensions root...
+Emitting ninja build file /root/.cache/torch_extensions/py38_cu124/gymtorch/build.ninja...
+Building extension module gymtorch...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module gymtorch...
+2026-04-01 06:24:29,772 - INFO - logger - logger initialized
+Error: FBX library failed to load - importing FBX data will not succeed. Message: No module named 'fbx'
+FBX tools must be installed from https://help.autodesk.com/view/FBX/2020/ENU/?guid=FBX_Developer_Help_scripting_with_python_fbx_installing_python_fbx_html
+task: 
+    name: HumanoidAMP
+    physics_engine: physx
+    env: 
+        numEnvs: 4096
+        envSpacing: 5
+        episodeLength: 300
+        cameraFollow: True
+        enableDebugVis: False
+        pdControl: True
+        powerScale: 1.0
+        controlFrequencyInv: 2
+        stateInit: Random
+        hybridInitProb: 0.5
+        numAMPObsSteps: 2
+        localRootObs: False
+        contactBodies: ['right_foot', 'left_foot']
+        terminationHeight: 0.5
+        enableEarlyTermination: True
+        motion_file: amp_humanoid_run.npy
+        asset: 
+            assetFileName: mjcf/amp_humanoid.xml
+        plane: 
+            staticFriction: 1.0
+            dynamicFriction: 1.0
+            restitution: 0.0
+    sim: 
+        dt: 0.0166
+        substeps: 2
+        up_axis: z
+        use_gpu_pipeline: True
+        gravity: [0.0, 0.0, -9.81]
+        physx: 
+            num_threads: 4
+            solver_type: 1
+            use_gpu: True
+            num_position_iterations: 4
+            num_velocity_iterations: 0
+            contact_offset: 0.02
+            rest_offset: 0.0
+            bounce_threshold_velocity: 0.2
+            max_depenetration_velocity: 10.0
+            default_buffer_size_multiplier: 5.0
+            max_gpu_contact_pairs: 8388608
+            num_subscenes: 4
+            contact_collection: 2
+    task: 
+        randomize: False
+        randomization_params: 
+            frequency: 600
+            observations: 
+                range: [0, 0.002]
+                operation: additive
+                distribution: gaussian
+            actions: 
+                range: [0.0, 0.02]
+                operation: additive
+                distribution: gaussian
+            sim_params: 
+                gravity: 
+                    range: [0, 0.4]
+                    operation: additive
+                    distribution: gaussian
+                    schedule: linear
+                    schedule_steps: 3000
+            actor_params: 
+                humanoid: 
+                    color: True
+                    rigid_body_properties: 
+                        mass: 
+                            range: [0.5, 1.5]
+                            operation: scaling
+                            distribution: uniform
+                            setup_only: True
+                            schedule: linear
+                            schedule_steps: 3000
+                    rigid_shape_properties: 
+                        friction: 
+                            num_buckets: 500
+                            range: [0.7, 1.3]
+                            operation: scaling
+                            distribution: uniform
+                            schedule: linear
+                            schedule_steps: 3000
+                        restitution: 
+                            range: [0.0, 0.7]
+                            operation: scaling
+                            distribution: uniform
+                            schedule: linear
+                            schedule_steps: 3000
+                    dof_properties: 
+                        damping: 
+                            range: [0.5, 1.5]
+                            operation: scaling
+                            distribution: uniform
+                            schedule: linear
+                            schedule_steps: 3000
+                        stiffness: 
+                            range: [0.5, 1.5]
+                            operation: scaling
+                            distribution: uniform
+                            schedule: linear
+                            schedule_steps: 3000
+                        lower: 
+                            range: [0, 0.01]
+                            operation: additive
+                            distribution: gaussian
+                            schedule: linear
+                            schedule_steps: 3000
+                        upper: 
+                            range: [0, 0.01]
+                            operation: additive
+                            distribution: gaussian
+                            schedule: linear
+                            schedule_steps: 3000
+train: 
+    params: 
+        seed: 42
+        algo: 
+            name: amp_continuous
+        model: 
+            name: continuous_amp
+        network: 
+            name: amp
+            separate: True
+            space: 
+                continuous: 
+                    mu_activation: None
+                    sigma_activation: None
+                    mu_init: 
+                        name: default
+                    sigma_init: 
+                        name: const_initializer
+                        val: -2.9
+                    fixed_sigma: True
+                    learn_sigma: False
+            mlp: 
+                units: [1024, 512]
+                activation: relu
+                d2rl: False
+                initializer: 
+                    name: default
+                regularizer: 
+                    name: None
+            disc: 
+                units: [1024, 512]
+                activation: relu
+                initializer: 
+                    name: default
+        load_checkpoint: False
+        load_path: 
+        config: 
+            name: HumanoidAMP
+            full_experiment_name: HumanoidAMP
+            env_name: rlgpu
+            ppo: True
+            multi_gpu: False
+            mixed_precision: False
+            normalize_input: True
+            normalize_value: True
+            value_bootstrap: True
+            num_actors: 4096
+            reward_shaper: 
+                scale_value: 1
+            normalize_advantage: True
+            gamma: 0.99
+            tau: 0.95
+            learning_rate: 5e-05
+            lr_schedule: constant
+            kl_threshold: 0.008
+            score_to_win: 20000
+            max_epochs: 5000
+            save_best_after: 100
+            save_frequency: 50
+            print_stats: True
+            grad_norm: 1.0
+            entropy_coef: 0.0
+            truncate_grads: False
+            e_clip: 0.2
+            horizon_length: 16
+            minibatch_size: 32768
+            mini_epochs: 6
+            critic_coef: 5
+            clip_value: False
+            seq_len: 4
+            bounds_loss_coef: 10
+            amp_obs_demo_buffer_size: 200000
+            amp_replay_buffer_size: 1000000
+            amp_replay_keep_prob: 0.01
+            amp_batch_size: 512
+            amp_minibatch_size: 4096
+            disc_coef: 5
+            disc_logit_reg: 0.05
+            disc_grad_penalty: 5
+            disc_reward_scale: 2
+            disc_weight_decay: 0.0001
+            normalize_amp_input: True
+            task_reward_w: 0.0
+            disc_reward_w: 1.0
+pbt: 
+    enabled: False
+task_name: HumanoidAMP
+experiment: 
+num_envs: 4096
+seed: 42
+torch_deterministic: False
+max_iterations: 5000
+physics_engine: physx
+pipeline: gpu
+sim_device: cuda:0
+rl_device: cuda:0
+graphics_device_id: 0
+num_threads: 4
+solver_type: 1
+num_subscenes: 4
+test: False
+checkpoint: 
+sigma: 
+multi_gpu: False
+wandb_activate: False
+wandb_group: 
+wandb_name: HumanoidAMP
+wandb_entity: 
+wandb_project: isaacgymenvs
+wandb_tags: []
+wandb_logcode_dir: 
+capture_video: False
+capture_video_freq: 1464
+capture_video_len: 100
+force_render: True
+headless: True
+Setting seed: 42
+Using rl_device: cuda:0
+Using sim_device: cuda:0
+[Warning] [carb.gym.plugin] useGpu is set, forcing single scene (0 subscenes)
+Not connected to PVD
++++ Using GPU PhysX
+Physics Engine: PhysX
+Physics Device: cuda:0
+GPU Pipeline: enabled
+<unknown>:3: DeprecationWarning: invalid escape sequence \*
+/tmp/isaacgym/python/isaacgym/torch_utils.py:135: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  def get_axis_params(value, axis_idx, x_value=0., dtype=np.float, n_dims=3):
+/opt/conda/envs/isaacgym/lib/python3.8/site-packages/networkx/classes/graph.py:23: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+  from collections import Mapping
+/opt/conda/envs/isaacgym/lib/python3.8/site-packages/networkx/classes/reportviews.py:95: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+  from collections import Mapping, Set, Iterable
+/opt/conda/envs/isaacgym/lib/python3.8/site-packages/networkx/readwrite/graphml.py:346: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  (np.int, "int"), (np.int8, "int"),
+/opt/conda/envs/isaacgym/lib/python3.8/site-packages/networkx/drawing/nx_pydot.py:27: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  from pkg_resources import parse_version
+/opt/conda/envs/isaacgym/lib/python3.8/site-packages/gym/spaces/box.py:84: UserWarning: [33mWARN: Box bound precision lowered by casting to float32[0m
+  logger.warn(f"Box bound precision lowered by casting to {self.dtype}")
+/workspace/IsaacGymEnvs/isaacgymenvs/tasks/amp/humanoid_amp_base.py:186: DeprecationWarning: an integer is required (got type isaacgym._bindings.linux-x86_64.gym_38.DofDriveMode).  Implicit conversion to integers using __int__ is deprecated, and may be removed in a future version of Python.
+  asset_options.default_dof_drive_mode = gymapi.DOF_MODE_NONE
+{'name': 'HumanoidAMP', 'full_experiment_name': None, 'env_name': 'rlgpu', 'ppo': True, 'multi_gpu': False, 'mixed_precision': False, 'normalize_input': True, 'normalize_value': True, 'value_bootstrap': True, 'num_actors': 4096, 'reward_shaper': {'scale_value': 1}, 'normalize_advantage': True, 'gamma': 0.99, 'tau': 0.95, 'learning_rate': 5e-05, 'lr_schedule': 'constant', 'kl_threshold': 0.008, 'score_to_win': 20000, 'max_epochs': 5000, 'save_best_after': 100, 'save_frequency': 50, 'print_stats': True, 'grad_norm': 1.0, 'entropy_coef': 0.0, 'truncate_grads': False, 'e_clip': 0.2, 'horizon_length': 16, 'minibatch_size': 32768, 'mini_epochs': 6, 'critic_coef': 5, 'clip_value': False, 'seq_len': 4, 'bounds_loss_coef': 10, 'amp_obs_demo_buffer_size': 200000, 'amp_replay_buffer_size': 1000000, 'amp_replay_keep_prob': 0.01, 'amp_batch_size': 512, 'amp_minibatch_size': 4096, 'disc_coef': 5, 'disc_logit_reg': 0.05, 'disc_grad_penalty': 5, 'disc_reward_scale': 2, 'disc_weight_decay': 0.0001, 'normalize_amp_input': True, 'task_reward_w': 0.0, 'disc_reward_w': 1.0, 'device': 'cuda:0', 'population_based_training': False, 'pbt_idx': None}
+self.seed = 42
+Started to train
+Loading 1/1 motion files: /workspace/IsaacGymEnvs/isaacgymenvs/tasks/../../assets/amp/motions/amp_humanoid_run.npy
+Loaded 1 motions with a total length of 1.350s.
+Box(-1.0, 1.0, (28,), float32) Box(-inf, inf, (105,), float32)
+WARNING: seq_len is deprecated, use seq_length instead
+seq_length: 4
+current training device: cuda:0
+build mlp: 105
+build mlp: 105
+build mlp: 210
+sigma
+actor_mlp.0.weight
+actor_mlp.0.bias
+actor_mlp.2.weight
+actor_mlp.2.bias
+critic_mlp.0.weight
+critic_mlp.0.bias
+critic_mlp.2.weight
+critic_mlp.2.bias
+value.weight
+value.bias
+mu.weight
+mu.bias
+_disc_mlp.0.weight
+_disc_mlp.0.bias
+_disc_mlp.2.weight
+_disc_mlp.2.bias
+_disc_logits.weight
+_disc_logits.bias
+RunningMeanStd:  (1,)
+RunningMeanStd:  (105,)
+Error executing job with overrides: ['task=HumanoidAMP', 'num_envs=4096', 'headless=True', 'max_iterations=5000']
+Traceback (most recent call last):
+  File "train.py", line 210, in launch_rlg_hydra
+    runner.run({
+  File "/opt/conda/envs/isaacgym/lib/python3.8/site-packages/rl_games/torch_runner.py", line 270, in run
+    self.run_train(args)
+  File "/opt/conda/envs/isaacgym/lib/python3.8/site-packages/rl_games/torch_runner.py", line 182, in run_train
+    agent = self.algo_factory.create(self.algo_name, base_name='run', params=self.params)
+  File "/opt/conda/envs/isaacgym/lib/python3.8/site-packages/rl_games/common/object_factory.py", line 40, in create
+    return builder(**kwargs)
+  File "train.py", line 188, in <lambda>
+    runner.algo_factory.register_builder('amp_continuous', lambda **kwargs : amp_continuous.AMPAgent(**kwargs))
+  File "/workspace/IsaacGymEnvs/isaacgymenvs/learning/amp_continuous.py", line 53, in __init__
+    super().__init__(base_name, params)
+  File "/workspace/IsaacGymEnvs/isaacgymenvs/learning/common_agent.py", line 98, in __init__
+    self.dataset = amp_datasets.AMPDataset(self.batch_size, self.minibatch_size, self.is_discrete, self.is_rnn, self.ppo_device, self.seq_len)
+AttributeError: 'AMPAgent' object has no attribute 'seq_len'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

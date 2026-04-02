@@ -1,0 +1,13 @@
+reacher-env/
+__pycache__/
+*.pyc
+.DS_Store
+*.zip
+*.pkl
+*.pth
+*.npz
+models/
+logs/
+eval_logs/
+isaac_gym/checkpoints/
+isaac_gym/videos/
