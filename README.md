@@ -1,12 +1,6 @@
 # Teaching Simulated Robots to Move
 
-A hands-on exploration of reinforcement learning for simulated robotics — from a 2-joint arm touching a target to a bipedal humanoid walking on a cloud GPU. Every experiment is documented, every failure is instructive, and the code is reproducible.
-
-## The Journey
-
-This project started with a simple question: *can I teach a simulated robot to move?* It ended with a humanoid achieving a reward of **9,620** on an A100 GPU, trained with the same algorithm (PPO) across every experiment — just scaled up.
-
-Along the way, I learned that reward functions are the real engineering challenge, that agents will exploit any loophole you leave open, and that compute scale matters more than algorithmic cleverness — until it doesn't.
+A hands-on exploration of reinforcement learning for simulated robotics — from a 2-joint arm touching a target to a bipedal humanoid walking on a cloud GPU. 
 
 ## Results Summary
 
