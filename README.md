@@ -28,15 +28,15 @@ A hands-on exploration of reinforcement learning for simulated robotics — from
 
 All three GPU experiments used **PPO with 4,096 parallel environments** on an NVIDIA A100 80GB. Same algorithm, same task — the only variables were network capacity and architecture.
 
-## Key Findings
+## Findings
 
 ### 1. Reward Functions Are the Real Problem
 The HalfCheetah learned to run on its back because forward velocity was rewarded with no orientation penalty. The sparse Reacher got zero signal until accidentally touching the target. On the learning curves plot, the sparse agent *appeared* to score highest — but only because it was measuring a completely different reward. **Reward magnitude is only meaningful within the same reward function.**
 
-### 2. Agents Exploit, Not Solve
+### 2. Agents Exploit 
 The HalfCheetah's reward went from 1,200 to 2,000 (quantitative improvement) while running on its back the entire time (no qualitative change). The agent found a "good enough" exploit early and refined it rather than discovering something better.
 
-### 3. The Bitter Lesson Is Real — Until It Isn't
+### 3. Bitter Lesson 
 PPO on a MacBook with 8 parallel environments: reward ~500. PPO on an A100 with 4,096 environments: reward 6,334. Same algorithm, 500× more compute. **Scale alone turned a failing agent into a walking one.**
 
 But scale had limits. The baseline MLP plateaued around 6,900. A bigger network ([512,256,128]) reached 9,780, and adding LSTM memory reached 9,620. **Network capacity and architecture mattered once scale alone wasn't enough.**
