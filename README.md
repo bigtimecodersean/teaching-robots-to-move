@@ -1,4 +1,4 @@
-# Teaching Simulated Robots to Move
+# Teaching Simulated Robots to Move with RL 
 
 A hands-on exploration of reinforcement learning for simulated robotics — from a 2-joint arm touching a target to a bipedal humanoid walking on a cloud GPU. 
 
@@ -161,6 +161,4 @@ python train.py task=Humanoid num_envs=4096 headless=True max_iterations=5000 \
 
 Total GPU spend for all experiments: approximately **$12–15** on RunPod. All MacBook experiments ran on an Apple Silicon laptop at no cost.
 
-## Acknowledgments
-
-This project was built interactively with Claude (Anthropic), with Claude Code handling GPU environment setup, experiment orchestration, and video recording on the remote A100 instance.
+ 
